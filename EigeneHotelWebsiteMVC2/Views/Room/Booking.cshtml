@@ -1,21 +1,21 @@
-﻿@model RoomBill  
+﻿@model RoomBillAndNumberOfBeds
 @{
     ViewData["Title"] = "Booking";
 }
 
 <h1>Booking</h1>
 <form method="post" asp-action="Booking">
-    <label asp-for="PeopleCount">Anzahl der Personen</label>
-    <input type="number" asp-for="PeopleCount" min="1" max="@ViewBag.NumberOfBeds" placeholder="Anzahl der Personen" />
+    <label asp-for="RoomBill.PeopleCount">Anzahl der Personen</label>
+    <input type="number" asp-for="RoomBill.PeopleCount" min="1" max="@Model.NumberOfBeds" placeholder="Anzahl der Personen" />
 
-    <label asp-for="StartingDate">Ankunftsdatum</label>
-    <input id="start" class="dates" asp-for="StartingDate" type="date" />
+    <label asp-for="RoomBill.StartingDate">Ankunftsdatum</label>
+    <input id="start" class="dates" asp-for="RoomBill.StartingDate" type="date" />
 
-    <label asp-for="EndingDate">Abreisedatum</label>
-    <input id="end" class="dates" asp-for="EndingDate" type="date" /> 
+    <label asp-for="RoomBill.EndingDate">Abreisedatum</label>
+    <input id="end" class="dates" asp-for="RoomBill.EndingDate" type="date" /> 
 
-    <label asp-for="RoomService">Name des Services</label>
-    <select asp-for="RoomService">
+    <label asp-for="RoomBill.RoomService">Name des Services</label>
+    <select asp-for="RoomBill.RoomService">
         <option value="3">Wählen Sie eine Option aus</option>
         <option value="0">Vollpension</option>
         <option value="1">Halbpension</option>
@@ -31,6 +31,7 @@
     var dd = today.getDate();
     var mm = today.getMonth() + 1; 
     var yyyy = today.getFullYear();
+    console.log(today);
     if (dd < 10) {
         dd = '0' + dd
     }
@@ -41,7 +42,10 @@
     today = yyyy + '-' + mm + '-' + dd;
 
     var startDate = document.getElementById("start");
+    startDate.value = today;
     startDate.min = today;
+    document.getElementById("end").min = today;
+    document.getElementById("end").value = today;
 
     document.getElementById("start").addEventListener("change", function () {
         console.log("got to eventListener");
@@ -52,6 +56,7 @@
         var st = addDays(new Date(sT), 1);
 
         console.log(st);
+        document.getElementById("end").value = st.toISOString().split('T')[0];
         document.getElementById("end").min = st.toISOString().split('T')[0];
     });
 

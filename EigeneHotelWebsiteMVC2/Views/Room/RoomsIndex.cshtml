@@ -1,5 +1,5 @@
 ﻿
-@model int
+@model List<Room>
 @{
     ViewData["Title"] = "RoomsIndex";
 }
@@ -22,14 +22,14 @@
 
 
 </form>
-@if (ViewBag.Rooms == null)
+@if (Model == null)
 {
     <h2>Es konnte kein Raum gefunden werden!</h2>
     <p>Bitte versuchen Sie es mit einer anderen Suche.</p>
 }
 else
 {
-    @foreach (Room room in ViewBag.Rooms)
+    @foreach (Room room in Model)
     {
         <div>
             @room.RoomNumber <br />

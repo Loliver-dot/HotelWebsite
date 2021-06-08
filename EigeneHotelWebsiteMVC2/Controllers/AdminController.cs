@@ -175,9 +175,11 @@ namespace EigeneHotelWebsiteMVC2.Controllers
             {
                 repAdmin.Open();
                 user = repAdmin.getAllUsers().Where(r => r.UserId == UserId).First();
-            } catch (DbException)
+            } catch (DbException e)
             {
-
+                return View("Error", new ErrorViewModel {
+                    RequestId = "DbError in EditUserInformation \n" + e
+                });
             }
             finally
             {

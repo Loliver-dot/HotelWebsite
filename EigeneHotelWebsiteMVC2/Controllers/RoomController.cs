@@ -10,13 +10,6 @@ using System.Data.Common;
 
 
 
-/*
-                    TODO
-    Plan:
-    Pop up für Roomfeatures für einen Raum hinzufügen
-    Roomfeatues hinzufügen mit externer Seite
-
-*/
 
 namespace EigeneHotelWebsiteMVC2.Controllers
 {
@@ -29,10 +22,11 @@ namespace EigeneHotelWebsiteMVC2.Controllers
         [HttpGet]
         public IActionResult RoomsIndex()
         {
+            List<Room> allRooms = new();
             try
             {
                 repRoom.Open();
-                ViewBag.Rooms = repRoom.GetAllRooms();
+                allRooms = repRoom.GetAllRooms();
             } catch (DbException)
             {
                 return View("Error", new ErrorViewModel {
@@ -44,7 +38,7 @@ namespace EigeneHotelWebsiteMVC2.Controllers
                 repRoom.Close();
             }
 
-            return View();
+            return View(allRooms);
         }
 
         [HttpGet]
@@ -99,7 +93,10 @@ namespace EigeneHotelWebsiteMVC2.Controllers
 
 
             Room room;
-
+            RoomBillAndNumberOfBeds numberOfBeds = new RoomBillAndNumberOfBeds {
+                NumberOfBeds = 0,
+                RoomBill = new()
+            };
             try
             {
                 repRoom.Open();
@@ -114,16 +111,16 @@ namespace EigeneHotelWebsiteMVC2.Controllers
             {
                 repRoom.Close();
             }
-            ViewBag.NumberOfBeds = room.NumberOfBeds;
-            return View("Booking");
+            numberOfBeds.NumberOfBeds = room.NumberOfBeds;
+            return View("Booking", numberOfBeds);
         }
 
         [HttpPost]
-        public IActionResult Booking(int? BookingId, RoomBill roomBill)
+        public IActionResult Booking(int? BookingId, RoomBillAndNumberOfBeds roomBillAndNumberOfBeds)
         {
             BookingId = BookingId == null || BookingId == 0 ? HttpContext.Session.GetInt32("roomId") : BookingId;
 
-            roomBill.RoomId = BookingId;
+            roomBillAndNumberOfBeds.RoomBill.RoomId = BookingId;
             Room room;
 
             if (ModelState.IsValid)
@@ -144,7 +141,7 @@ namespace EigeneHotelWebsiteMVC2.Controllers
                     {
                         BookedRoomBills = SessionHelper.GetObjectFromJson<List<RoomBill>>(HttpContext.Session, "roomBill");
                     }
-                    BookedRoomBills.Add(roomBill);
+                    BookedRoomBills.Add(roomBillAndNumberOfBeds.RoomBill);
 
                     SessionHelper.SetObjectAsJson(HttpContext.Session, "roomBill", BookedRoomBills);
                     SessionHelper.SetObjectAsJson(HttpContext.Session, "bookingIds", BookedRoomsIds);
@@ -177,8 +174,8 @@ namespace EigeneHotelWebsiteMVC2.Controllers
                 {
                     repRoom.Close();
                 }
-                ViewBag.NumberOfBeds = room.NumberOfBeds;
-                return View();
+                roomBillAndNumberOfBeds.NumberOfBeds = room.NumberOfBeds;
+                return View(roomBillAndNumberOfBeds);
             }
 
 

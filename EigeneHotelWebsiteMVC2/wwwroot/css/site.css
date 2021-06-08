@@ -1,0 +1,58 @@
+﻿#container {
+    width: 80%;
+    margin: auto;
+    border: 1px solid black;
+}
+header{
+    height: 7em;
+}
+main {
+    height: 28.125em;
+    min-height: 28.125em;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+}
+nav {
+    float: left;
+    width: 15%;
+    height: 28.125em;
+    min-height: 28.125em;
+}
+content {
+    padding: 1em;
+
+    float: left;
+    width: 70%;
+    height: 28.125em;
+    min-height: 28.125em;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+
+    overflow-y: auto;
+}
+aside {
+    float: right;
+    width: 15%;
+    height: 28.125em;
+    min-height: 28.125em;
+}
+footer{
+    
+    
+    height: 5em;
+    
+}
+
+#login{
+    margin-right: 10px;
+}
+
+#profile{
+    float: right;
+    margin-right: 0px;
+}
+
+#error{
+    float: right; 
+    color: red;
+}

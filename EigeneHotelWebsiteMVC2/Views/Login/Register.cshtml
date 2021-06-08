@@ -1,0 +1,43 @@
+﻿@model EigeneHotelWebsiteMVC2.Models.RegisterResponse;
+@{
+    ViewData["Title"] = "Register";
+}
+
+<h1>Register</h1>
+<form method="post" asp-action="Register">
+    <table>
+        <tbody>
+            <tr>
+                <td>
+                    <input type="text" asp-for="FirstName" placeholder="Vorname"/>
+                </td>
+                <td>
+                    <input type="text" asp-for="LastName" placeholder="Nachname" />
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input  type="text" asp-for="Email" placeholder="Email" />
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input type="password" asp-for="Password" placeholder="Passwort" />
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input type="password" asp-for="PasswordRepeat" placeholder="Passwort wiederholen" />
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input type="text" asp-for="PhoneNumber" placeholder="Telefonnummer" />
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <input type="submit" value="Registrieren!"/>
+    <div asp-validation-summary="All">@ViewBag.Error</div>
+</form>
+

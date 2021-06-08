@@ -1,0 +1,43 @@
+﻿@model Room
+@{
+    ViewData["Title"] = "RoomInfo";
+}
+
+<h1>RoomInfo</h1>
+<div>
+    @Model.RoomNumber <br />
+    @if (Model.RoomName != "")
+    {
+        @Model.RoomName <br />
+    }
+    @Model.NumberOfBeds @if (Model.NumberOfBeds > 1)
+    {
+        <span>Betten</span>
+    }
+    else
+    {
+        <span>Bett</span>
+    }
+    <br />
+    @Model.PricePerNight €<br />
+    @Model.Area m<sup>2</sup> <br />
+    @Model.Description <br />
+    @foreach(RoomFeatures roomFeature in Model.RoomFeatures)
+    {
+        <h4>@roomFeature.Name</h4>
+        <p>
+            @roomFeature.Description
+        </p>
+    }
+
+    @if(HttpContextAccessor.HttpContext.Session.GetInt32("isAdmin") == 1)
+    {
+        <form method="post" asp-controller="admin" asp-action="ChangeRoomData">
+            <input name="RoomId" class="invisible" value="@Model.RoomID" />
+            <input type="submit" value="Raumdaten Ändern" />
+        </form>
+    }
+    
+    <br />
+    <br />
+</div>

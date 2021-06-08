@@ -1,0 +1,95 @@
+﻿@model EigeneHotelWebsiteMVC2.Models.Room
+@{
+    ViewData["Title"] = "AddRoom";
+}
+
+<h1>AddRoom</h1>
+
+<form method="post" asp-action="AddRoom" asp-controller="admin">
+    <label asp-for="RoomNumber">Raumnummer</label>
+    <input asp-for="RoomNumber" type="text" placeholder="Raumnummer" />
+    <br />
+
+    <label asp-for="RoomName">Raumname *</label>
+    <input asp-for="RoomName" type="text" placeholder="Raumname" />
+    <br />
+
+    <label asp-for="PricePerNight">Preis pro Nacht</label>
+    <input asp-for="PricePerNight" type="text" placeholder="Preis pro Nacht" />
+    <br />
+
+    <label asp-for="Area">Fläche des Zimmers</label>
+    <input asp-for="Area" type="text" placeholder="Fläche des Zimmers" />
+    <br />
+
+    <label asp-for="NumberOfBeds">Anzahl der Betten</label>
+    <input asp-for="NumberOfBeds" type="text" placeholder="Anzahl der Betten" />
+    <br />
+
+    <label asp-for="Description">Beschreibung</label>
+    <textarea asp-for="Description" type="text" placeholder="Beschreibung"></textarea>
+    <br />
+
+    <input name="FeaturesIDs" type="text" id="roomFeatures" class="invisible" />
+    <br />
+
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+        Besonderheiten des Raumes hinzufügen
+    </button>
+
+    <div id="exampleModal" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Besonderheiten hinzufügen</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!--foreach roomFeatures in ViewBag.RoomFeatures-->
+                    @foreach(RoomFeatures feature in ViewBag.Features)
+                    {
+                        <div>
+                            @feature.FeatureID
+                            @feature.Name
+                            @feature.Description
+                            <input type="checkbox" class="featuresCheckBox" id="@feature.FeatureID" />
+                        </div>
+                    }
+                </div>
+                <div class="modal-footer">
+                    <button type="button" onclick="addFeatures()" class="btn btn-primary" data-dismiss="modal">Besonderheiten speichern</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <input type="submit" />
+
+    <div asp-validation-summary="All"></div>
+    <p>* Optionale Angabe</p>
+    <script>
+        $('#myModal').on('shown.bs.modal', function () {
+            $('#myInput').trigger('focus')
+        })
+
+        function addFeatures() {
+            document.getElementById("roomFeatures").value = "";
+
+            let checkedButtons = [];
+            let btns = document.getElementsByClassName("featuresCheckBox");
+            for (let btn of btns) {
+                if (btn.checked) {
+                    checkedButtons.push(btn.id);
+                }
+            }
+
+            for (let checked of checkedButtons) {
+                document.getElementById("roomFeatures").value += " " + checked ;
+            }
+
+        }
+    </script>
+</form>

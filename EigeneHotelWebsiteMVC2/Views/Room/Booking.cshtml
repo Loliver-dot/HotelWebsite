@@ -1,0 +1,65 @@
+﻿@model RoomBill  
+@{
+    ViewData["Title"] = "Booking";
+}
+
+<h1>Booking</h1>
+<form method="post" asp-action="Booking">
+    <label asp-for="PeopleCount">Anzahl der Personen</label>
+    <input type="number" asp-for="PeopleCount" min="1" max="@ViewBag.NumberOfBeds" placeholder="Anzahl der Personen" />
+
+    <label asp-for="StartingDate">Ankunftsdatum</label>
+    <input id="start" class="dates" asp-for="StartingDate" type="date" />
+
+    <label asp-for="EndingDate">Abreisedatum</label>
+    <input id="end" class="dates" asp-for="EndingDate" type="date" /> 
+
+    <label asp-for="RoomService">Name des Services</label>
+    <select asp-for="RoomService">
+        <option value="3">Wählen Sie eine Option aus</option>
+        <option value="0">Vollpension</option>
+        <option value="1">Halbpension</option>
+        <option value="2">Nur Frühstück</option>
+    </select>
+    <input type="submit"/>
+    <div asp-validation-summary="All"></div>
+</form>
+
+
+<script>
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth() + 1; 
+    var yyyy = today.getFullYear();
+    if (dd < 10) {
+        dd = '0' + dd
+    }
+    if (mm < 10) {
+        mm = '0' + mm
+    }
+
+    today = yyyy + '-' + mm + '-' + dd;
+
+    var startDate = document.getElementById("start");
+    startDate.min = today;
+
+    document.getElementById("start").addEventListener("change", function () {
+        console.log("got to eventListener");
+        console.log(this.value);
+
+        var sT = this.value;
+
+        var st = addDays(new Date(sT), 1);
+
+        console.log(st);
+        document.getElementById("end").min = st.toISOString().split('T')[0];
+    });
+
+    function addDays(date, days) {
+        const copy = new Date(Number(date))
+        copy.setDate(date.getDate() + days)
+        return copy
+    }
+
+
+</script>

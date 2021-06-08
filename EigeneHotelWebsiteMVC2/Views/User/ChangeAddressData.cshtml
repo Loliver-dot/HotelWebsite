@@ -1,0 +1,34 @@
+﻿@model AddressResponse
+@{
+    ViewData["Title"] = "ChangeAddressData";
+}
+
+<form method="post" asp-action="ChangeAddressDataResponse">
+    <table>
+        <thead>
+            <tr>
+                <th>Staat</th>    
+                <th>Postleitzahl</th>    
+                <th>Stadt</th>    
+                <th>Straße</th>    
+                <th>Hausnummer</th>    
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><input asp-for="State" value="@ViewBag.Address.State"/></td>
+                <td><input asp-for="PostalCode" value="@ViewBag.Address.PostalCode" /></td>
+                <td><input asp-for="City" value="@ViewBag.Address.City" /></td>
+                <td><input asp-for="Street" value="@ViewBag.Address.Street" /></td>
+                <td><input asp-for="StreetNumber" value="@ViewBag.Address.StreetNumber" /></td>
+                <td><input class="invisible" asp-for="AddressId" value="@ViewBag.Address.AddressId" /></td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="submit" value="Adresse ändern" />
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</form>
+

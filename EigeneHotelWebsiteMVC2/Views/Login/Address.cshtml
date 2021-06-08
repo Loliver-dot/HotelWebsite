@@ -1,0 +1,29 @@
+﻿@model EigeneHotelWebsiteMVC2.Models.AddressResponse  
+@{
+    ViewData["Title"] = "Address";
+}
+
+<form asp-action="Address" method="post">
+    <label asp-for="State">Staat</label>
+    <input asp-for="State" placeholder="Staat" />
+    <br />
+
+    <label asp-for="PostalCode">Postleitzahl</label>
+    <input asp-for="PostalCode" placeholder="Postleitzahl" />
+    <br />
+
+    <label asp-for="City">Stadt</label>
+    <input asp-for="City" placeholder="Stadt" />
+    <br />
+
+    <label asp-for="Street">Straße</label>
+    <input asp-for="Street" placeholder="Straße" />
+    <br />
+
+    <label asp-for="StreetNumber">Hausnummer</label>
+    <input asp-for="StreetNumber" placeholder="Hausnummer" />
+    <br />
+    <a href="/home/index">Adresse später hinzufügen</a>
+    <input type="submit" value="Bestätigen" />
+</form>
+

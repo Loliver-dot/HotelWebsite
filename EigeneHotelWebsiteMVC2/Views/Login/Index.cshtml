@@ -1,0 +1,17 @@
+﻿@model EigeneHotelWebsiteMVC2.Models.LoginResponse
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Login</h1>
+<div id="login" class="container">
+    <form class="input-group" asp-action="" method="post">
+        <input class="input" asp-for="UserName" placeholder="Benutzername" />
+        <input type="password" asp-for="Password" placeholder="Passwort" />
+        <input type="submit" value="Anmelden" />
+        <span class="error">@ViewBag.Error</span>
+    </form>
+    <p>Noch nicht registriert? <a href="/login/register">Hier registrieren!</a></p>
+    <div asp-validation-summary="All"></div>
+</div>
+

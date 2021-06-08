@@ -1,0 +1,40 @@
+﻿@model User
+@{
+    ViewData["Title"] = "ChangeUserData";
+}
+
+<form asp-action="ChangeUserDataResponse" method="post">
+    <table>
+        <thead>
+            <tr>
+                <th>Vorname</th>
+                <th>Nachname</th>
+                <th>Email-Adresse</th>
+                <th>Telefonnummer</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            <tr>
+                <td><input asp-for="FirstName" value="@ViewBag.User.FirstName" /></td>
+                <td><input asp-for="LastName" value="@ViewBag.User.LastName" /></td>
+                <td><input asp-for="Email" value="@ViewBag.User.Email" /></td>
+                <td><input asp-for="PhoneNumber" value="@ViewBag.User.PhoneNumber" /></td>
+                <td><input class="invisible" asp-for="UserId" value="@ViewBag.User.UserId" /></td>
+                <td>
+                    @if (ViewBag.User.IsAdmin)
+                    {
+                        <input class="invisible" name="IsAdmin" type="checkbox" checked="checked" />
+                    }
+                    else
+                    {
+                        <input class="invisible" name="IsAdmin" type="checkbox" />
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td><input type="submit" value="Benutzerdaten ändern" /></td>
+            </tr>
+        </tbody>
+    </table>
+</form>

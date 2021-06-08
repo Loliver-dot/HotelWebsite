@@ -1,0 +1,57 @@
+﻿
+@{
+    ViewData["Title"] = "ShowProfile";
+}
+
+<div>
+    <h1>Ihre Benutzerdaten</h1>
+    @ViewBag.User.FirstName
+    @ViewBag.User.LastName
+    @ViewBag.User.Email
+    @ViewBag.User.PhoneNumber
+    <form asp-action="ChangeUserData" method="post">
+        <input type="submit" asp-route-UserId="@ViewBag.User.UserId" />
+    </form>
+</div>
+<table>
+    @if (ViewBag.Addresses.Count == 0)
+    {
+        <tr>
+            <td colspan="5"><h4>Sie haben keine Adresse hinzugefügt</h4></td>
+        </tr>
+    }
+    else
+    {
+        <thead>
+            <tr>
+                <th>Staat</th>
+                <th>Postleitzahl</th>
+                <th>Stadt</th>
+                <th>Straße</th>
+                <th>Hausnummer</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (AddressResponse address in ViewBag.Addresses)
+            {
+                <tr>
+                    <td>@address.State</td>
+                    <td>@address.PostalCode</td>
+                    <td>@address.City</td>
+                    <td>@address.Street</td>
+                    <td>@address.StreetNumber</td>
+                    <td>
+                        <form>
+                            <input name="addressId" class="invisible" value="@address.AddressId" />
+                            <input type="submit" asp-action="ChangeAddressData" />
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    }
+
+</table>
+
+<a asp-action="address" asp-controller="login">Wollen Sie eine weitere Adresse hinzufügen?</a>

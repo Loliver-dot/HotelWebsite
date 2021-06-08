@@ -1,0 +1,99 @@
+﻿
+@model int
+@{
+    ViewData["Title"] = "RoomsIndex";
+}
+
+<h1>RoomsIndex</h1>
+<form asp-controller="room" id="search">
+    <label>Suche nach einen Raumnamen</label>
+    <input name="SearchByName" placeholder="Zimmer zum Goldenen Dachl" />
+    <input asp-action="SearchByName" type="submit" />
+    <br />
+
+    <label>Suche nach Preisgrenzen</label>
+    <label>Untere Grenze</label>
+    <input id="bottomNumber" type="number" name="bottom" min="0" placeholder="0" />
+    <label>Obere Grenze</label>
+    <input id="topNumber" type="number" name="top" min="0" placeholder="30" />
+    <input asp-action="SearchByPriceRange" type="submit" />
+    <br />
+
+
+
+</form>
+@if (ViewBag.Rooms == null)
+{
+    <h2>Es konnte kein Raum gefunden werden!</h2>
+    <p>Bitte versuchen Sie es mit einer anderen Suche.</p>
+}
+else
+{
+    @foreach (Room room in ViewBag.Rooms)
+    {
+        <div>
+            @room.RoomNumber <br />
+            @if (room.RoomName != "")
+            {
+                @room.RoomName <br />
+            }
+            @room.NumberOfBeds @if (room.NumberOfBeds > 1)
+            {
+                <span>Betten</span>
+            }
+            else
+            {
+                <span>Bett</span>
+            }
+            <br />
+            @room.PricePerNight €<br />
+            @room.Area m<sup>2</sup> <br />
+            @room.Description <br />
+
+            <form method="post">
+                <input asp-action="RoomInfo" asp-route-LookUpId="@room.RoomID" type="submit" class="btn btn-success" value="Informationen zu diesem Zimmer" />
+                <input asp-action="Booking1" asp-route-BookingId="@room.RoomID" title="Sie müssen sich erst Anmelden um ein Zimmer buchen zu können" type="submit" class="btn btn-success btn-book" disabled value="Dieses Zimmer Buchen" />
+            </form>
+
+            <br />
+            <br />
+        </div>
+    }
+
+    <script>
+        const topInput = document.getElementById("topNumber");
+        const botInput = document.getElementById("bottomNumber");
+
+        botInput.onchange = function () {
+            if (Number(topInput.value) < Number(botInput.value)) {
+                topInput.value = botInput.value;
+            }
+            topInput.min = botInput.value;
+        }
+    </script>
+    if (HttpContextAccessor.HttpContext.Session.GetInt32("isLoggedIn") == 1)
+    {
+
+
+        <script>
+            var btns = document.getElementsByClassName("btn-book");
+            for (var i = 0; i < btns.length; i++) {
+                btns[i].disabled = false;
+                btns[i].title = "";
+            }
+        </script>
+
+    }
+    else
+    {
+        <script>
+            var btns = document.getElementsByClassName("btn-book");
+            for (var i = 0; i < btns.length; i++) {
+                btns[i].disabled = true;
+                btns[i].title = "";
+            }
+        </script>
+
+    }
+}
+

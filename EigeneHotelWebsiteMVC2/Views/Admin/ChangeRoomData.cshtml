@@ -1,0 +1,125 @@
+﻿@model RoomAndAllFeature
+@{
+    ViewData["Title"] = "ChangeRoomData";
+}
+
+
+
+
+<h1>ChangeRoomData</h1>
+<form asp-action="ChangeRoomDataResponse" method="post">
+    <table>
+        <thead>
+            <tr>
+                <th>Raum ID</th>
+                <th>Raumnummer</th>
+                <th>Fläche</th>
+                <th>Anzahl der Betten</th>
+                <th>Raumname</th>
+                <th>Preis pro Nacht</th>
+                <th>Beschreibung</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            <tr>
+                <td>@Model.Room.RoomID</td>
+                <td><input asp-for="Room.RoomNumber" value="@Model.Room.RoomNumber" /></td>
+                <td><input asp-for="Room.Area" value="@Model.Room.Area" /></td>
+                <td><input asp-for="Room.NumberOfBeds" value="@Model.Room.NumberOfBeds" /></td>
+                <td><input asp-for="Room.RoomName" value="@Model.Room.RoomName" /></td>
+                <td><input asp-for="Room.PricePerNight" value="@Model.Room.PricePerNight" /></td>
+                <td><input asp-for="Room.Description" value="@Model.Room.Description" /></td>
+                <td><input class="invisible" asp-for="Room.RoomID" value="@Model.Room.RoomID" /></td>
+            </tr>
+            <tr>
+                <td>
+                    @{ 
+                        string s = "";
+                        if (Model.Room.RoomFeatures != null)
+                        {
+                            s = String.Join(" ", Model.Room.RoomFeatures?.Select(r => r.FeatureID));
+
+
+                        }
+                    }
+                    <input id="roomFeatures" class="" name="roomFeatures" value="@s" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button onclick="initRoomFeatures()" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                        Besonderheiten des Raumes hinzufügen
+                    </button>
+                </td>
+
+                <td><input type="submit" value="Raumdaten ändern" asp-action="ChangeRoomDataResponse" /></td>
+            </tr>
+        </tbody>
+    </table>
+</form>
+
+
+<div id="exampleModal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Besonderheiten hinzufügen</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!--foreach roomFeatures in ViewBag.RoomFeatures-->
+                @foreach (RoomFeatures feature in Model.AllRoomFeatures)
+                {
+                    <div>
+                        @feature.FeatureID
+                        @feature.Name
+                        @feature.Description
+                        <input type="checkbox" class="featuresCheckBox" id="@feature.FeatureID" />
+                    </div>
+                }
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="addFeatures()" class="btn btn-primary" data-dismiss="modal">Besonderheiten speichern</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $('#myModal').on('shown.bs.modal', function () {
+        $('#myInput').trigger('focus')
+    })
+
+    function addFeatures() {
+        document.getElementById("roomFeatures").value = "";
+
+        let checkedButtons = [];
+        let btns = document.getElementsByClassName("featuresCheckBox");
+        for (let btn of btns) {
+            if (btn.checked) {
+                checkedButtons.push(btn.id);
+            }
+        }
+
+        for (let checked of checkedButtons) {
+            document.getElementById("roomFeatures").value += " " + checked;
+        }
+
+    }
+    function initRoomFeatures() {
+        let btns = document.getElementsByClassName("featuresCheckBox");
+        for (let feature of document.getElementById("roomFeatures").value.split(" ")) {
+            for (let btn of btns) {
+                if (feature == btn.id) {
+                    btn.checked = true;
+                }
+            }
+        }
+
+    }
+
+</script>

@@ -1,0 +1,23 @@
+﻿@model Bill
+@{
+    ViewData["Title"] = "BillingInformation";
+}
+
+<h1>BillingInformation</h1>
+<a href="/Room/RoomsIndex/">Wollen Sie einen weiteren Raum hinzufügen?</a>
+<form method="post" asp-action="BillingInformation">
+    <label asp-for="PayingMethod">Bitte wählen Sie eine Bezahlmöglichkeit aus</label>
+    <select asp-for="PayingMethod">
+        <option value="-1">Bezahlmöglichkeit</option>
+        <option value="0">Bar</option>
+        <option value="1">Visa</option>
+        <option value="2">Mastercard</option>
+    </select>
+    <label asp-for="IsPaid">
+        Wollen Sie sofort Bezahlen?
+    </label><br />
+    <input name="paid" type="checkbox">
+
+    <input type="submit" />
+    <div asp-validation-summary="All"></div>
+</form>

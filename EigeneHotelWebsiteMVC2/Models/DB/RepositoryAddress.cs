@@ -146,7 +146,7 @@ namespace EigeneHotelWebsiteMVC2.Models.DB
                     CityName = AddressResponse.City
                 };
                 InsertCity(city);
-                cityId = getCityId(city.CityName);
+                cityId = getCityId(city.PostalCode);
             }
             
 

@@ -16,12 +16,12 @@
         </thead>
         <tbody>
             <tr>
-                <td><input asp-for="State" value="@ViewBag.Address.State"/></td>
-                <td><input asp-for="PostalCode" value="@ViewBag.Address.PostalCode" /></td>
-                <td><input asp-for="City" value="@ViewBag.Address.City" /></td>
-                <td><input asp-for="Street" value="@ViewBag.Address.Street" /></td>
-                <td><input asp-for="StreetNumber" value="@ViewBag.Address.StreetNumber" /></td>
-                <td><input class="invisible" asp-for="AddressId" value="@ViewBag.Address.AddressId" /></td>
+                <td><input asp-for="State" value="@Model.State"/></td>
+                <td><input asp-for="PostalCode" value="@Model.PostalCode" /></td>
+                <td><input asp-for="City" value="@Model.City" /></td>
+                <td><input asp-for="Street" value="@Model.Street" /></td>
+                <td><input asp-for="StreetNumber" value="@Model.StreetNumber" /></td>
+                <td><input class="invisible" asp-for="AddressId" value="@Model.AddressId" /></td>
             </tr>
             <tr>
                 <td>

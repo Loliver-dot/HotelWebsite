@@ -20,11 +20,15 @@ namespace EigeneHotelWebsiteMVC2.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
+            UserAddresses userAddresses = new UserAddresses {
+                User = new(),
+                Addresses = new()
+            };
             try
             {
                 repUser.Open();
-                ViewBag.User = repUser.GetUserById((int)HttpContext.Session.GetInt32("userId"));
-                ViewBag.Addresses = repUser.GetAddressesByUserId((int)HttpContext.Session.GetInt32("userId"));
+                userAddresses.User = repUser.GetUserById((int)HttpContext.Session.GetInt32("userId"));
+                userAddresses.Addresses = repUser.GetAddressesByUserId((int)HttpContext.Session.GetInt32("userId"));
                 // TODO
                 // -----------------------------
                 // Get all addresses from user and write it to ShowProfile
@@ -38,15 +42,16 @@ namespace EigeneHotelWebsiteMVC2.Controllers
             {
                 repUser.Close();
             }
-            return View();
+            return View(userAddresses);
         }
         [HttpPost]
         public IActionResult ShowProfile(int? UserId)
         {
+            User user = new();
             try
             {
                 repUser.Open();
-                ViewBag.User = repUser.GetUserById((int)UserId);
+                user = repUser.GetUserById((int)UserId);
             } catch (DbException){
                 return View("Error", new ErrorViewModel {
                     RequestId = "DbError in ChangeUserData"
@@ -56,7 +61,7 @@ namespace EigeneHotelWebsiteMVC2.Controllers
             {
                 repUser.Close();
             }
-            return View("ChangeUserData");
+            return View("ChangeUserData", user);
         }
         public IActionResult ChangeUserDataResponse(User newUser, string IsAdmin) { 
 
@@ -85,6 +90,7 @@ namespace EigeneHotelWebsiteMVC2.Controllers
         }
         public IActionResult ChangeAddressData(int? addressId)
         {
+            AddressResponse address = new();
             if(HttpContext.Session.GetInt32("isLoggedIn") != 1)
             {
                 return RedirectToAction("Index", "Home");
@@ -92,7 +98,7 @@ namespace EigeneHotelWebsiteMVC2.Controllers
             try
             {
                 repUser.Open();
-                ViewBag.Address = repUser.GetAddressById((int)addressId);
+                address = repUser.GetAddressById((int)addressId);
 
             } catch (DbException)
             {
@@ -104,7 +110,7 @@ namespace EigeneHotelWebsiteMVC2.Controllers
             {
                 repUser.Close();
             }
-            return View();
+            return View(address);
         }
         public IActionResult ChangeAddressDataResponse(AddressResponse newAddress)
         {

@@ -16,13 +16,13 @@
         <tbody>
 
             <tr>
-                <td><input asp-for="FirstName" value="@ViewBag.User.FirstName" /></td>
-                <td><input asp-for="LastName" value="@ViewBag.User.LastName" /></td>
-                <td><input asp-for="Email" value="@ViewBag.User.Email" /></td>
-                <td><input asp-for="PhoneNumber" value="@ViewBag.User.PhoneNumber" /></td>
-                <td><input class="invisible" asp-for="UserId" value="@ViewBag.User.UserId" /></td>
+                <td><input asp-for="FirstName" value="@Model.FirstName" /></td>
+                <td><input asp-for="LastName" value="@Model.LastName" /></td>
+                <td><input asp-for="Email" value="@Model.Email" /></td>
+                <td><input asp-for="PhoneNumber" value="@Model.PhoneNumber" /></td>
+                <td><input class="invisible" asp-for="UserId" value="@Model.UserId" /></td>
                 <td>
-                    @if (ViewBag.User.IsAdmin)
+                    @if (Model.IsAdmin)
                     {
                         <input class="invisible" name="IsAdmin" type="checkbox" checked="checked" />
                     }

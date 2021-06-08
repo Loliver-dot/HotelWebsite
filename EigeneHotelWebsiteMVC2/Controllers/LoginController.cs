@@ -120,10 +120,10 @@ namespace EigeneHotelWebsiteMVC2.Controllers
                 repAddress.Open();
                 repAddress.Insert(addressResponse, (int)HttpContext.Session.GetInt32("userId"));
             }
-            catch(DbException)
+            catch(DbException e)
             {
                 return View("Error", new ErrorViewModel {
-                    RequestId = "DbError in Address"
+                    RequestId = "DbError in Address\n" + e
                 } );
             }
             finally

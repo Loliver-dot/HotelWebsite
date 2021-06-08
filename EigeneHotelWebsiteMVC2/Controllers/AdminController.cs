@@ -208,9 +208,11 @@ namespace EigeneHotelWebsiteMVC2.Controllers
             try
             {
                 repAdmin.Open();
-                if(repAdmin.ChangeUser(userToChange, userToChange.UserId))
+                if(!repAdmin.ChangeUser(userToChange, userToChange.UserId))
                 {
-                    return View("AddRoom");
+                    return View("Error", new ErrorViewModel {
+                        RequestId = "User was not changed"
+                    });
                 }
             } catch (DbException)
             {

@@ -10,7 +10,7 @@
     @Model.User.Email
     @Model.User.PhoneNumber
     <form asp-action="ChangeUserData" method="post">
-        <input type="submit" asp-route-UserId="@Model.User.UserId" />
+        <input type="submit" asp-route-UserId="@Model.User.UserId" value="Benutzerdaten ändern" />
     </form>
 </div>
 <table>
@@ -44,7 +44,7 @@
                     <td>
                         <form>
                             <input name="addressId" class="invisible" value="@address.AddressId" />
-                            <input type="submit" asp-action="ChangeAddressData" />
+                            <input type="submit" asp-action="ChangeAddressData" value="Addressdaten ändern"/>
                         </form>
                     </td>
                 </tr>

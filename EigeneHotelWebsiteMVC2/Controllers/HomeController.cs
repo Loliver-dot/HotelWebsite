@@ -12,7 +12,7 @@ namespace EigeneHotelWebsiteMVC2.Controllers
         public IActionResult Index()
         {
             string name = HttpContext.Session.GetString("name");
-            ViewBag.Name = name;
+
             return View();
         }
         public IActionResult Logout()

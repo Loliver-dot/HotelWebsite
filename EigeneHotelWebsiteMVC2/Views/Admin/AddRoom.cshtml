@@ -1,4 +1,4 @@
-﻿@model EigeneHotelWebsiteMVC2.Models.Room
+﻿@model EigeneHotelWebsiteMVC2.Models.RoomAndAllFeature
 @{
     ViewData["Title"] = "AddRoom";
 }
@@ -6,28 +6,28 @@
 <h1>AddRoom</h1>
 
 <form method="post" asp-action="AddRoom" asp-controller="admin">
-    <label asp-for="RoomNumber">Raumnummer</label>
-    <input asp-for="RoomNumber" type="text" placeholder="Raumnummer" />
+    <label asp-for="Room.RoomNumber">Raumnummer</label>
+    <input asp-for="Room.RoomNumber" type="text" placeholder="Raumnummer" />
     <br />
 
-    <label asp-for="RoomName">Raumname *</label>
-    <input asp-for="RoomName" type="text" placeholder="Raumname" />
+    <label asp-for="Room.RoomName">Raumname *</label>
+    <input asp-for="Room.RoomName" type="text" placeholder="Raumname" />
     <br />
 
-    <label asp-for="PricePerNight">Preis pro Nacht</label>
-    <input asp-for="PricePerNight" type="text" placeholder="Preis pro Nacht" />
+    <label asp-for="Room.PricePerNight">Preis pro Nacht</label>
+    <input asp-for="Room.PricePerNight" type="text" placeholder="Preis pro Nacht" />
     <br />
 
-    <label asp-for="Area">Fläche des Zimmers</label>
-    <input asp-for="Area" type="text" placeholder="Fläche des Zimmers" />
+    <label asp-for="Room.Area">Fläche des Zimmers</label>
+    <input asp-for="Room.Area" type="text" placeholder="Fläche des Zimmers" />
     <br />
 
-    <label asp-for="NumberOfBeds">Anzahl der Betten</label>
-    <input asp-for="NumberOfBeds" type="text" placeholder="Anzahl der Betten" />
+    <label asp-for="Room.NumberOfBeds">Anzahl der Betten</label>
+    <input asp-for="Room.NumberOfBeds" type="text" placeholder="Anzahl der Betten" />
     <br />
 
-    <label asp-for="Description">Beschreibung</label>
-    <textarea asp-for="Description" type="text" placeholder="Beschreibung"></textarea>
+    <label asp-for="Room.Description">Beschreibung</label>
+    <textarea asp-for="Room.Description" type="text" placeholder="Beschreibung"></textarea>
     <br />
 
     <input name="FeaturesIDs" type="text" id="roomFeatures" class="invisible" />
@@ -47,8 +47,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <!--foreach roomFeatures in ViewBag.RoomFeatures-->
-                    @foreach(RoomFeatures feature in ViewBag.Features)
+                    @foreach(RoomFeatures feature in Model.AllRoomFeatures)
                     {
                         <div>
                             @feature.FeatureID

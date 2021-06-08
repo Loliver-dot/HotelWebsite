@@ -20,10 +20,15 @@ namespace EigeneHotelWebsiteMVC2.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
+            RoomAndAllFeature Features = new RoomAndAllFeature {
+                Room = new(),
+                AllRoomFeatures = new()
+            };
             try
             {
                 repAdmin.Open();
-                ViewBag.Features = repAdmin.GetRoomFeatures();
+                
+                Features.AllRoomFeatures = repAdmin.GetRoomFeatures();
             } catch (DbException e)
             {
                 return View("Error", new ErrorViewModel {
@@ -32,9 +37,9 @@ namespace EigeneHotelWebsiteMVC2.Controllers
             }
             finally
             {
-
+                repAdmin.Close();
             }
-            return View();
+            return View(Features);
         }
 
         [HttpPost]
@@ -165,12 +170,11 @@ namespace EigeneHotelWebsiteMVC2.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            User user;
+            User user = new();
             try
             {
                 repAdmin.Open();
                 user = repAdmin.getAllUsers().Where(r => r.UserId == UserId).First();
-                ViewBag.User = user;
             } catch (DbException)
             {
 
@@ -179,7 +183,7 @@ namespace EigeneHotelWebsiteMVC2.Controllers
             {
                 repAdmin.Close();
             }
-            return View();
+            return View(user);
 
         }
              

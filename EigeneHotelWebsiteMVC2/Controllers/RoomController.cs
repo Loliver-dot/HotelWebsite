@@ -155,7 +155,6 @@ namespace EigeneHotelWebsiteMVC2.Controllers
                 {
                     repRoom.Close();
                 }
-                ViewBag.Room = room;
                 return View("BillingInformation");
             }
             else
@@ -249,17 +248,18 @@ namespace EigeneHotelWebsiteMVC2.Controllers
 
         public IActionResult SearchByName(string SearchByName)
         {
+            List<Room> foundRooms = new();
             try
             {
                 repRoom.Open();
                 if (SearchByName == null)
                 {
-                    ViewBag.Rooms = repRoom.GetAllRooms();
+                    foundRooms = repRoom.GetAllRooms();
                 }
                 else
                 {
-                    
-                    ViewBag.Rooms = repRoom.GetAllRooms().Where(r => r.RoomName.ToLower().Contains(SearchByName.ToLower())).ToList().Count > 0 ? repRoom.GetAllRooms().Where(r => r.RoomName.ToLower().Contains(SearchByName.ToLower())).ToList() : null;
+
+                    foundRooms = repRoom.GetAllRooms().Where(r => r.RoomName.ToLower().Contains(SearchByName.ToLower())).ToList().Count > 0 ? repRoom.GetAllRooms().Where(r => r.RoomName.ToLower().Contains(SearchByName.ToLower())).ToList() : null;
                 }
             } catch (DbException)
             {
@@ -272,20 +272,21 @@ namespace EigeneHotelWebsiteMVC2.Controllers
                 repRoom.Close();
             }
 
-            return View("RoomsIndex");
+            return View("RoomsIndex", foundRooms);
         }
         public IActionResult SearchByPriceRange(double? bottom, double? top)
         {
+            List<Room> foundRooms = new();
             try
             {
                 repRoom.Open();
                 if (bottom == null || top == null)
                 {
-                    ViewBag.Rooms = repRoom.GetAllRooms();
+                    foundRooms = repRoom.GetAllRooms();
                 }
                 else
                 {
-                    ViewBag.Rooms = repRoom.GetAllRooms().Where(r => r.PricePerNight > bottom && r.PricePerNight < top).ToList().Count > 0 ? repRoom.GetAllRooms().Where(r => r.PricePerNight > bottom && r.PricePerNight < top).ToList() : null ;
+                    foundRooms = repRoom.GetAllRooms().Where(r => r.PricePerNight > bottom && r.PricePerNight < top).ToList().Count > 0 ? repRoom.GetAllRooms().Where(r => r.PricePerNight > bottom && r.PricePerNight < top).ToList() : null ;
                 }
             } catch (DbException)
             {
@@ -298,7 +299,7 @@ namespace EigeneHotelWebsiteMVC2.Controllers
                 repRoom.Close();
             }
 
-            return View("RoomsIndex");
+            return View("RoomsIndex", foundRooms);
         }
     }
 }

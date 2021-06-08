@@ -44,8 +44,12 @@
     var startDate = document.getElementById("start");
     startDate.value = today;
     startDate.min = today;
-    document.getElementById("end").min = today;
-    document.getElementById("end").value = today;
+    
+    var sT = start.value;
+
+    var st = addDays(new Date(sT), 1);
+    document.getElementById("end").min = st.toISOString().split('T')[0];
+    document.getElementById("end").value = st.toISOString().split('T')[0];
 
     document.getElementById("start").addEventListener("change", function () {
         console.log("got to eventListener");

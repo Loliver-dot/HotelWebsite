@@ -22,7 +22,7 @@ namespace EigeneHotelWebsiteMVC2.Models
         [Required(ErrorMessage = "Bitte geben Sie ein Passwort ein!")]
         [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$^+=!*()@%&]).{8,}$"
             , ErrorMessage = "Ihr Passwort muss mind. 8 Zeichen lang sein, mind." +
-            " eine Zahl, mind. einen Großbuchstaben und mind. einen Kleinbuchstaben enthalten")]
+            " eine Zahl, mind. einen Großbuchstaben, mind. einen Kleinbuchstaben und ein Sonderzeichen enthalten")]
         public string Password { get; set; } 
 
         [Required(ErrorMessage = "Bitte geben Sie ein Passwort ein!")]

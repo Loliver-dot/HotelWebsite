@@ -48,6 +48,10 @@ namespace EigeneHotelWebsiteMVC2.Controllers
             // FeaturesIDs im Format
             // " 2"
             // oder " 2 3"
+            if (HttpContext.Session.GetInt32("isAdmin") != 1)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             string[] featuresString = FeaturesIDs.Trim().Split(" ");
             List<int> features = new();
             foreach (string s in featuresString)

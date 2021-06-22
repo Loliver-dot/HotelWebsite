@@ -73,6 +73,7 @@ namespace EigeneHotelWebsiteMVC2.Controllers
                     repUser.Open();
                     if (repUser.Register(Rr))
                     {
+                        HttpContext.Session.SetInt32("userId", repUser.GetIdByEmail(Rr.Email));
                         HttpContext.Session.SetString("name", Rr.FirstName);
                         HttpContext.Session.SetString("email", Rr.Email);
                         HttpContext.Session.SetInt32("isLoggedIn", 1);
